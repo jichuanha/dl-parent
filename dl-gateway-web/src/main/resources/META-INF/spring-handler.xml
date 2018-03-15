@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-autowire="byName"
+	   xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="com.dongyin.ecommerce.dl.gateway.web.handler.*" />
+
+	<!-- 业务模块handlers -->
+	<bean id="handlerFactory" class="com.dongyin.commons.gateway.web.handler.DefaultHandlerFactory" >
+		<property name="handlerMap">
+			<map>
+				<entry key="0010" value-ref="sendSmsComplexHandler"/>
+				<entry key="0070" value-ref="activityComplexHandler"/>
+				<entry key="0080" value-ref="actOrderComplexHandler"/>
+			</map>
+		</property>
+	</bean>
+
+	<!--活动模块的功能handlers-->
+	<bean id="activityComplexHandler" class="com.dongyin.ecommerce.dl.gateway.web.handler.activity.ActivityComplexHandler">
+		<property name="subModuleMap">
+			<map>
+				<entry key="00001" value-ref="activityListHandler"/>
+				<entry key="00002" value-ref="activityPageHandler"/>
+				<entry key="00003" value-ref="activityItemHandler"/>
+				<entry key="00004" value-ref="activityItemDetailHandler"/>
+				<entry key="00005" value-ref="activityDrawAwardHandler"/>
+				<entry key="00006" value-ref="activityDrawAwardPageHandler"/>
+				<entry key="00007" value-ref="activityDraiDetailiHandler"/>
+				<entry key="00008" value-ref="activityDraiAgentDetailHandler"/>
+				<entry key="00009" value-ref="qrcodeImageHandler"/>
+				<entry key="00011" value-ref="activityGetHandler"/>
+				<entry key="00012" value-ref="activityShareHandler"/>
+				<entry key="00013" value-ref="activityPictureHandler"/>
+				<entry key="00014" value-ref="memberAssociationHandler"/>
+			</map>
+		</property>
+	</bean>
+
+	<!--活动订单模块handler-->
+	<bean id="actOrderComplexHandler" class="com.dongyin.ecommerce.dl.gateway.web.handler.actorder.ActOrderComplexHandler">
+		<property name="subModuleMap">
+			<map>
+				<entry key="00001" value-ref="addActOrderHandler"/>
+				<entry key="00002" value-ref="hasAssociateAgentHandler"/>
+				<entry key="00003" value-ref="getActOrderListHandler"/>
+				<entry key="00004" value-ref="getActOrderDetailsHandler"/>
+				<entry key="00005" value-ref="getActItemInventoryHandler"/>
+				<entry key="00006" value-ref="getAddressHandler"/>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="sendSmsComplexHandler" class="com.dongyin.ecommerce.dl.gateway.web.handler.sms.SmsComplexHandler">
+		<property name="subModuleMap">
+			<map>
+				<entry key="00001" value-ref="sendSmsHandler"/>
+			</map>
+		</property>
+	</bean>
+</beans>

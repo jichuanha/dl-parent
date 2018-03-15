@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="APP_NAME" value="mobile_gateway_web" />
+	<!-- <property name="LOG_HOME" value="${user.home}/logs/logs_${APP_NAME}" 
+		/> -->
+	<!-- <property name="LOG_HOME" value="/deploy/logs/gw/${APP_NAME}" /> -->
+	<property name="LOG_HOME" value="/deploy/logs/dl/gw" />
+	<property name="LOG_PREFIX" value="${APP_NAME}" />
+	<property name="LOG_CHARSET" value="UTF-8" />
+	<property name="LOG_ROOT_LEVEL" value="INFO" />
+	<property name="LOG_DIR" value="${LOG_HOME}/%d{yyyyMMdd}" />
+	<property name="LOG_MSG"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p [%c] %m%n" />
+	<property name="MAX_FILE_SIZE" value="50MB" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<Encoding>${LOG_CHARSET}</Encoding>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${LOG_MSG}</pattern>
+		</layout>
+	</appender>
+
+
+	<appender name="FILE_ALL"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Encoding>${LOG_CHARSET}</Encoding>
+		<File>${LOG_HOME}/${LOG_PREFIX}All.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_DIR}/${LOG_PREFIX}All%i.log</FileNamePattern>
+			<maxHistory>2</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${LOG_MSG}</pattern>
+		</layout>
+	</appender>
+
+	<appender name="FILE_ERROR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<OnMismatch>DENY</OnMismatch>
+			<OnMatch>ACCEPT</OnMatch>
+		</filter>
+		<Encoding>${LOG_CHARSET}</Encoding>
+		<File>${LOG_HOME}/${LOG_PREFIX}Err.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${LOG_DIR}/${LOG_PREFIX}Err%i.log</FileNamePattern>
+			<maxHistory>2</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>${LOG_MSG}</Pattern>
+		</layout>
+	</appender>
+
+	<!-- <appender name="payResult" class="ch.qos.logback.core.rolling.RollingFileAppender"> -->
+	<!-- <Encoding>${LOG_CHARSET}</Encoding> -->
+	<!-- <File>${LOG_HOME}/${LOG_PREFIX}payResult.log</File> -->
+	<!-- <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy"> -->
+	<!-- <FileNamePattern>${LOG_DIR}/${LOG_PREFIX}All%i.log</FileNamePattern> -->
+	<!-- <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP"> -->
+	<!-- <maxFileSize>${MAX_FILE_SIZE}</maxFileSize> -->
+	<!-- </timeBasedFileNamingAndTriggeringPolicy> -->
+	<!-- </rollingPolicy> -->
+	<!-- <layout class="ch.qos.logback.classic.PatternLayout"> -->
+	<!-- <pattern>${LOG_MSG}</pattern> -->
+	<!-- </layout> -->
+	<!-- </appender> -->
+
+	<logger name="org.springframework" level="ERROR" />
+	<logger name="org.apache.commons" level="ERROR" />
+	<logger name="org.eclipse.jetty.io" level="ERROR" />
+	<logger name="org.eclipse.jetty.util" level="ERROR" />
+	<logger name="org.quartz.core" level="ERROR" />
+	<logger name="org.apache.zookeeper" level="INFO" />
+	<!-- <logger name="com.ikuko.web.controller.PayController" level="DEBUG"
+		additivity="false"> 
+		<appender-ref ref="payResult" /> 
+		 </logger> -->
+		<root level="${LOG_ROOT_LEVEL}">
+			<appender-ref ref="STDOUT" />
+			<appender-ref ref="FILE_ALL" />
+			<appender-ref ref="FILE_ERROR" />
+		</root>
+
+</configuration>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+		http://code.alibabatech.com/schema/dubbo  
+	    http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- consumer application name -->
+	<dubbo:application name="gateway-web-app" />
+
+	<!-- registry address, used for consumer to discover services -->
+
+	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" />
+
+	<dubbo:consumer timeout="600000" />
+
+	<dubbo:protocol serialization="java"></dubbo:protocol>
+
+	<dubbo:reference id="activityManagerService" interface="com.dongyin.leaf.wsacd.service.iface.ActivityManagerService" check="false"/>
+
+	<dubbo:reference id="activityDetailService" interface="com.dongyin.leaf.wsacd.service.iface.ActivityDetailService" check="false"/>
+
+	<dubbo:reference id="itemService" interface="com.dongyin.leaf.wsacd.service.iface.ItemService" check="false"/>
+
+	<dubbo:reference id="lotteryService" interface="com.dongyin.leaf.wsacd.service.iface.LotteryService" check="false"/>
+
+	<dubbo:reference id="actOrderService" interface="com.dongyin.leaf.wsacd.service.iface.ActOrderService" check="false"/>
+
+	<dubbo:reference id = "activityDraiService" interface="com.dongyin.leaf.wsacd.service.iface.ActivityDraiService" check="false"/>
+
+	<dubbo:reference id="drawAwardService" interface="com.dongyin.leaf.wsacd.service.iface.DrawAwardService" check="false"/>
+
+	<dubbo:reference id="smsService" interface="com.dongyin.commons.service.iface.SmsService" check="false"/>
+
+	<dubbo:reference id="memberCertService" interface="com.dongyin.authen.iface.MemberCertService" check="false"/>
+
+	<dubbo:reference id="memberService" interface="com.hzkans.leaf.user.service.iface.MemberService" check="false"/>
+
+	<dubbo:reference id="imageQRCodeService" interface="com.dongyin.leaf.wsacd.service.iface.ImageQRCodeService" check="false"/>
+
+	<dubbo:reference id="deliveryRegionService" interface="com.hzkans.leaf.user.service.iface.DeliveryRegionService" check="false"/>
+
+</beans>
